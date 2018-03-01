@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
@@ -32,31 +31,31 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         if let email = logInEmailTextField.text, let password = logInPasswordTextField.text {
             if (email.isEmpty || password.isEmpty) {
-                displayAlertMassage(message: "All fields are requied!")
+                displayAlertMassage(message: "All fields are required!")
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 return;
             }
             user.email = email
             user.password = password
-            self.request.logInRequest(user: self.user, completion: { (dic, error) in
+            self.request.logInRequest(user: self.user, completion: { [weak self] (dic, error) in
                 if let data = dic?.value(forKey: "data") as? NSDictionary {
                     if let t = data.value(forKey: "access_token") as? String {
-                        self.request.token = t; print("You log in successfully. Token:\(t)")
-                        self.request.getInfo(completion: { (dic, err) in
+                        self?.request.token = t; print("You log in successfully. Token:\(t)")
+                        self?.request.getInfo(completion: { (dic, err) in
                             if let text = dic?.value(forKey: "data") as? String {
-                                self.story.text = text
+                                self?.story.text = text
                                 DispatchQueue.main.async {
                                     UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                                    self.performSegue(withIdentifier: "displayResults", sender: self)
-                                    self.clearFields()
+                                    self?.performSegue(withIdentifier: "displayResults", sender: self)
+                                    self?.clearFields()
                                 }
                             }
                         })
                     } else if let error = dic?.value(forKey: "errors") as? [NSDictionary] {
                         if let err = error[0].value(forKey: "message") as? String {
                             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                            self.displayAlertMassage(message: err)
-                            self.clearFields()
+                            self?.displayAlertMassage(message: err)
+                            self?.clearFields()
                         }
                     }
                 }

@@ -36,7 +36,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBAction func touchSingUp(_ sender: Any) {
         if let username = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text, let passwordRepeat = repeatPasswordField.text {
             if (username.isEmpty || email.isEmpty || password.isEmpty || passwordRepeat.isEmpty) {
-                displayAlertMessage(message: "All fields are requied!")
+                displayAlertMessage(message: "All fields are required!")
                 return;
             }
             if (password != passwordRepeat) {
@@ -48,16 +48,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             user.name = username
             user.email = email
             user.password = password
-            self.request.signUpRequest(user: self.user, completion: { (dic, error) in
+            self.request.signUpRequest(user: self.user, completion: {  [weak self] (dic, error) in
                 if let data = dic?.value(forKey: "data") as? NSDictionary {
                     if let t = data.value(forKey: "access_token") as? String {
-                        self.request.token = t; print("You sign up successfully. Token=\(t)")
+                        self?.request.token = t; print("You sign up successfully. Token=\(t)")
                         DispatchQueue.main.async {
-                            self.performSegueToReturnBack()
+                            self?.performSegueToReturnBack()
                         }
                     } else if let error = dic?.value(forKey: "errors") as? [NSDictionary] {
                         if let err = error[0].value(forKey: "message") as? String {
-                            self.displayAlertMessage(message: err)
+                            self?.displayAlertMessage(message: err)
                         }
                     }
                 }

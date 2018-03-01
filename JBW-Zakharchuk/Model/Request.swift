@@ -13,7 +13,7 @@ class Request {
     var userInfo = UserStruct()
     var token: String?
     
-    public func signUpRequest(user: UserStruct, completion: @escaping (NSDictionary?, Error?) -> Void) {
+    func signUpRequest(user: UserStruct, completion: @escaping (NSDictionary?, Error?) -> Void) {
         let parameters = ["name": user.name, "email": user.email, "password": user.password]
         let url = "https://apiecho.cf/api/signup/"
         
@@ -36,7 +36,7 @@ class Request {
         }
     }
     
-    public func logInRequest(user: UserStruct, completion: @escaping (NSDictionary?, Error?) -> Void) {
+    func logInRequest(user: UserStruct, completion: @escaping (NSDictionary?, Error?) -> Void) {
         let parameters = ["email": user.email, "password": user.password]
         let url = "https://apiecho.cf/api/login/"
         
@@ -60,7 +60,7 @@ class Request {
         }
     }
     
-    public func getInfo(completion: @escaping (NSDictionary?, Error?) -> Void) {
+    func getInfo(completion: @escaping (NSDictionary?, Error?) -> Void) {
         let url = "http://apiecho.cf/api/get/text/"
         let headers = [
             "Accept": "application/json",
