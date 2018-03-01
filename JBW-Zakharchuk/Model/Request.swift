@@ -20,16 +20,7 @@ class Request {
         Alamofire.request(url, method:.post, parameters:parameters, encoding: JSONEncoding.default).responseJSON { response in
             switch response.result {
             case .success:
-                if let d = response.data {
-                    do {
-                        if let dic = try JSONSerialization.jsonObject(with: d, options: []) as? NSDictionary {
-                            completion(dic, nil)
-                        }
-                    }
-                    catch (let err) {
-                        print(err)
-                    }
-                }
+                self.checkingForResponse(response: response, completion: completion)
             case .failure(let error):
                 print(error)
             }
@@ -43,17 +34,7 @@ class Request {
         Alamofire.request(url, method:.post, parameters:parameters, encoding: JSONEncoding.default).responseJSON { response in
             switch response.result {
             case .success:
-                print(response)
-                if let d = response.data {
-                    do {
-                        if let dic = try JSONSerialization.jsonObject(with: d, options: []) as? NSDictionary {
-                            completion(dic, nil)
-                        }
-                    }
-                    catch (let err) {
-                        print(err)
-                    }
-                }
+                self.checkingForResponse(response: response, completion: completion)
             case .failure(let error):
                 print(error)
             }
@@ -72,20 +53,24 @@ class Request {
             .responseJSON { response in
                 switch response.result {
                 case .success:
-                    print(response)
-                    if let d = response.data {
-                        do {
-                            if let dic = try JSONSerialization.jsonObject(with: d, options: []) as? NSDictionary {
-                                completion(dic, nil)
-                            }
-                        }
-                        catch (let err) {
-                            print(err)
-                        }
-                    }
+                    self.checkingForResponse(response: response, completion: completion)
                 case .failure(let error):
                     print(error)
                 }
+        }
+    }
+    
+    private func checkingForResponse(response: DataResponse<Any>, completion: @escaping (NSDictionary?, Error?) -> Void) {
+        print(response)
+        if let d = response.data {
+            do {
+                if let dic = try JSONSerialization.jsonObject(with: d, options: []) as? NSDictionary {
+                    completion(dic, nil)
+                }
+            }
+            catch (let err) {
+                print(err)
+            }
         }
     }
 }
