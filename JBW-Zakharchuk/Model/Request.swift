@@ -61,16 +61,9 @@ class Request {
     }
     
     private func checkingForResponse(response: DataResponse<Any>, completion: @escaping (NSDictionary?, Error?) -> Void) {
-        print(response)
-        if let d = response.data {
-            do {
-                if let dic = try JSONSerialization.jsonObject(with: d, options: []) as? NSDictionary {
-                    completion(dic, nil)
-                }
-            }
-            catch (let err) {
-                print(err)
-            }
+        print("Success from NetworkManager")
+        if let result = response.result.value {
+            completion(result as? NSDictionary, nil)
         }
     }
 }
