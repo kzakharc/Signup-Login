@@ -1,0 +1,6 @@
+framework module Pods_JBW_Zakharchuk {
+  umbrella header "Pods-JBW-Zakharchuk-umbrella.h"
+
+  export *
+  module * { export * }
+}
