@@ -9,7 +9,7 @@
 import UIKit
 
 class InfoTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var InfoLabel: UILabel!
     
     func setKeyInfo(dic: Dictionary<Character, Int>, key: Character) {

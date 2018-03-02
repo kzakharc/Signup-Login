@@ -9,7 +9,7 @@
 import UIKit
 
 class ResultsTableViewController: UITableViewController {
-
+    
     var story: Text!
     
     override func viewDidLoad() {

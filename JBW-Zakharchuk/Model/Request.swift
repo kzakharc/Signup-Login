@@ -48,7 +48,6 @@ class Request {
             "content-type": "application/json",
             "Authorization": "Bearer " + self.token!
         ]
-        
         Alamofire.request(url, headers: headers)
             .responseJSON { response in
                 switch response.result {

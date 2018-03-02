@@ -17,7 +17,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     var user = UserStruct()
     var request = Request()
     var story = Text()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.logInEmailTextField.delegate = self
