@@ -18,12 +18,7 @@ class Request {
         let url = "https://apiecho.cf/api/signup/"
         
         Alamofire.request(url, method:.post, parameters:parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                self.checkingForResponse(response: response, completion: completion)
-            case .failure(let error):
-                print(error)
-            }
+            self.checkingForResponse(response: response, completion: completion)
         }
     }
     
@@ -32,12 +27,7 @@ class Request {
         let url = "https://apiecho.cf/api/login/"
         
         Alamofire.request(url, method:.post, parameters:parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                self.checkingForResponse(response: response, completion: completion)
-            case .failure(let error):
-                print(error)
-            }
+            self.checkingForResponse(response: response, completion: completion)
         }
     }
     
@@ -48,21 +38,20 @@ class Request {
             "content-type": "application/json",
             "Authorization": "Bearer " + self.token!
         ]
-        Alamofire.request(url, headers: headers)
-            .responseJSON { response in
-                switch response.result {
-                case .success:
-                    self.checkingForResponse(response: response, completion: completion)
-                case .failure(let error):
-                    print(error)
-                }
+        Alamofire.request(url, headers: headers).responseJSON { response in
+            self.checkingForResponse(response: response, completion: completion)
         }
     }
     
     private func checkingForResponse(response: DataResponse<Any>, completion: @escaping (NSDictionary?, Error?) -> Void) {
-        print("Success from NetworkManager")
-        if let result = response.result.value {
-            completion(result as? NSDictionary, nil)
+        switch response.result {
+        case .success:
+            print("Success from NetworkManager")
+            if let result = response.result.value {
+                completion(result as? NSDictionary, nil)
+            }
+        case .failure(let error):
+            print(error)
         }
     }
 }
