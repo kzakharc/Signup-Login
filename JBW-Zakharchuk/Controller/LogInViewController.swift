@@ -25,6 +25,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(LogInViewController.keyboardWillShow(sender:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(LogInViewController.keyboardWillHide(sender:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        signUpButton.layer.cornerRadius = 5
+        logInButton.layer.cornerRadius = 5
     }
     
     @IBAction func touchLogIn(_ sender: UIButton) {
