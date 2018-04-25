@@ -73,7 +73,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    // MARK: Alert Massage
+    // MARK: Alert Message
     
     func displayAlertMassage(message: String) {
         let myAlert = UIAlertController(title: "Message", message: message, preferredStyle: UIAlertControllerStyle.alert)
